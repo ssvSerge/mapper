@@ -19,13 +19,7 @@
 
 using namespace std;
 
-#define CFG_TEXT_HIGHWAY_MOTORWAY               "Motorway"
-#define CFG_TEXT_HIGHWAY_PRIMARY                "Primary"
-#define CFG_TEXT_HIGHWAY_SECONDARY              "Secondary"
-#define CFG_TEXT_HIGHWAY_RESIDENTIAL            "Residential"
-#define CFG_TEXT_HIGHWAY_STREET                 "Street"
-#define CFG_TEXT_HIGHWAY_PATH                   "Path"
-#define CFG_TEXT_HIGHWAY_METRO                  "Metro"
+#define LOG_UNKNOWN_NODE                        (0)
 
 #define CFG_TEXT_AREA                           "Area"
 #define CFG_TEXT_AREA_BUILDING                  "Building"
@@ -43,24 +37,25 @@ typedef enum tag_xml_cmd_id {
 }   XML_CMD_ID;
 
 #define  OBJ_ID_DEFAULT                          (0x000000000000ULL)
-#define  OBJ_ID_TRANSPORT                        (0x000000000001ULL)
-#define  OBJ_ID_TRANSPORT_BUS                    (0x000000000002ULL)
-#define  OBJ_ID_TRANSPORT_TRAM                   (0x000000000004ULL)
-#define  OBJ_ID_TRANSPORT_TRAIN                  (0x000000000008ULL)
-#define  OBJ_ID_TRANSPORT_TROLLEY                (0x000000000010ULL)
-#define  OBJ_ID_TRANSPORT_TAXI                   (0x000000000020ULL)
-#define  OBJ_ID_TRANSPORT_METRO_STATION          (0x000000000040ULL)
-#define  OBJ_ID_TRANSPORT_METRO_ENTRANCE         (0x000000000080ULL)
-// #define  OBJ_ID_ROAD_MOTORWAY                    (0x000000000100ULL)
-// #define  OBJ_ID_ROAD_PRIMARY                     (0x000000000200ULL)
-// #define  OBJ_ID_ROAD_SECONDARY                   (0x000000000400ULL)
-// #define  OBJ_ID_ROAD_RESIDENTIAL                 (0x000000000800ULL)
-// #define  OBJ_ID_ROAD_STREET                      (0x000000001000ULL)
-// #define  OBJ_ID_ROAD_PATH                        (0x000000002000ULL)
-// #define  OBJ_ID_ROAD_METRO                       (0x000000004000ULL)
-// #define  OBJ_ID_AREA                             (0x000000008000ULL)
-// #define  OBJ_ID_AREA_BUILDING                    (0x000000010000ULL)
-// #define  OBJ_ID_AREA_ASPHALT                     (0x000000020000ULL)
+#define  OBJ_ID_IGNORE                           (0x000000000001ULL)
+#define  OBJ_ID_DELETE                           (0x000000000002ULL)
+#define  OBJ_ID_TRANSPORT                        (0x000000000004ULL)
+#define  OBJ_ID_TRANSPORT_BUS                    (0x000000000008ULL)
+#define  OBJ_ID_TRANSPORT_TRAM                   (0x000000000010ULL)
+#define  OBJ_ID_TRANSPORT_TRAIN                  (0x000000000020ULL)
+#define  OBJ_ID_TRANSPORT_TROLLEY                (0x000000000040ULL)
+#define  OBJ_ID_TRANSPORT_TAXI                   (0x000000000080ULL)
+#define  OBJ_ID_TRANSPORT_METRO_STATION          (0x000000000100ULL)
+#define  OBJ_ID_TRANSPORT_METRO_ENTRANCE         (0x000000000200ULL)
+#define  OBJ_ID_ROAD_MOTORWAY                    (0x000000000400ULL)
+#define  OBJ_ID_ROAD_PRIMARY                     (0x000000000800ULL)
+#define  OBJ_ID_ROAD_SECONDARY                   (0x000000001000ULL)
+#define  OBJ_ID_ROAD_RESIDENTIAL                 (0x000000002000ULL)
+#define  OBJ_ID_ROAD_STREET                      (0x000000004000ULL)
+#define  OBJ_ID_ROAD_PATH                        (0x000000010000ULL)
+#define  OBJ_ID_ROAD_METRO                       (0x000000020000ULL)
+#define  OBJ_ID_AREA_BUILDING                    (0x000000040000ULL)
+#define  OBJ_ID_AREA_ASPHALT                     (0x000000080000ULL)
 
 
 
@@ -340,10 +335,10 @@ bool MapNodeTypes (XmlParamsList& params_list) {
     static const XML_MAPPER mapper[] = {
         { "Transport",      OBJ_ID_TRANSPORT },
         { "MetroEntrance",  OBJ_ID_TRANSPORT_METRO_ENTRANCE },
+        { "MetroStation",   OBJ_ID_TRANSPORT_METRO_STATION},
         { "Bus",            OBJ_ID_TRANSPORT_BUS },
         { "Tram",           OBJ_ID_TRANSPORT_TRAM },
         { "Train",          OBJ_ID_TRANSPORT_TRAIN },
-        { "MetroStation",   OBJ_ID_TRANSPORT_METRO_STATION},
         { "Trolley",        OBJ_ID_TRANSPORT_TROLLEY },
         { "Taxi",           OBJ_ID_TRANSPORT_TAXI }
     };
@@ -380,15 +375,13 @@ bool MapNodeTypes (XmlParamsList& params_list) {
 bool MapWayTypes (XmlParamsList& params_list) {
 
     static const XML_MAPPER mapper[] = {
-        { CFG_CMD_IGNORE,               OBJ_ID_IGNORE },
-        { CFG_CMD_DELETE,               OBJ_ID_IGNORE },
-        { CFG_TEXT_HIGHWAY_MOTORWAY,    OBJ_ID_ROAD_MOTORWAY },
-        { CFG_TEXT_HIGHWAY_PRIMARY,     OBJ_ID_ROAD_PRIMARY },
-        { CFG_TEXT_HIGHWAY_SECONDARY,   OBJ_ID_ROAD_SECONDARY },
-        { CFG_TEXT_HIGHWAY_RESIDENTIAL, OBJ_ID_ROAD_RESIDENTIAL },
-        { CFG_TEXT_HIGHWAY_STREET,      OBJ_ID_ROAD_STREET },
-        { CFG_TEXT_HIGHWAY_PATH,        OBJ_ID_ROAD_PATH },
-        { CFG_TEXT_HIGHWAY_METRO,       OBJ_ID_ROAD_METRO }
+        { "Motorway",       OBJ_ID_ROAD_MOTORWAY },
+        { "Primary",        OBJ_ID_ROAD_PRIMARY },
+        { "Secondary",      OBJ_ID_ROAD_SECONDARY },
+        { "Residential",    OBJ_ID_ROAD_RESIDENTIAL },
+        { "Street",         OBJ_ID_ROAD_STREET },
+        { "Path",           OBJ_ID_ROAD_PATH },
+        { "Metro",          OBJ_ID_ROAD_METRO }
     };
 
     uint64_t t = OBJ_ID_DEFAULT;
@@ -423,11 +416,8 @@ bool MapWayTypes (XmlParamsList& params_list) {
 bool MapAreaTypes (XmlParamsList& params_list) {
 
     static const XML_MAPPER mapper[] = {
-        { CFG_CMD_IGNORE,               OBJ_ID_IGNORE },
-        { CFG_CMD_DELETE,               OBJ_ID_IGNORE },
-        { CFG_TEXT_AREA,                OBJ_ID_AREA },
-        { CFG_TEXT_AREA_BUILDING,       OBJ_ID_AREA_BUILDING },
-        { CFG_TEXT_AREA_ASPHALT,        OBJ_ID_AREA_ASPHALT }
+        { "Building",      OBJ_ID_AREA_BUILDING },
+        { "Asphalt",       OBJ_ID_AREA_ASPHALT }
     };
 
     uint64_t t = OBJ_ID_DEFAULT;
@@ -536,6 +526,14 @@ bool ProcessCfgLine (string str) {
     }
 
 
+    for ( int i = 0; i < ARRAY_SIZE (xml_param.p); i++ ) {
+        ss >> xml_param.p [i];
+        if ( xml_param.p [i].empty () ) {
+            break;
+        }
+    }
+
+
     if ( target_name == "n" ) {
 
         if ( xml_param.info.cmd == CMD_ID_IGNORE ) {
@@ -564,9 +562,7 @@ bool ProcessCfgLine (string str) {
             RET_FALSE;
         }
 
-        if ( (xml_param.info.t & OBJ_ID_DELETE) == 0 ) {
-            g_lex_list_nodes.push_back (xml_param.info);
-        }
+        g_lex_list_nodes.push_back (xml_param.info);
 
         return true;
     }
@@ -605,9 +601,7 @@ bool ProcessCfgLine (string str) {
             RET_FALSE;
         }
 
-        if ( (xml_param.info.t & OBJ_ID_DELETE) == 0 ) {
-            g_lex_list_ways.push_back (xml_param.info);
-        }
+        g_lex_list_ways.push_back (xml_param.info);
 
         return true;
 
@@ -792,20 +786,20 @@ bool ProcessTag (string name, string val) {
     RET_FALSE;
 }
 
-bool AddName (OsmObject& xml_info, string t, string k, string v) {
+bool AddName (OsmObject& xml_info, string collection, string def_lang, string k, string v) {
 
     string str_lang;
 
     auto spliter = k.find (':');
 
     if ( spliter == string::npos ) {
-        // str_lang = g_lex_default_lang;
+        str_lang = def_lang;
     } else {
         str_lang = k.substr (spliter + 1, k.size ());
     }
 
     if ( str_lang.empty () ) {
-        // str_lang = g_lex_default_lang;
+        str_lang = def_lang;
     }
 
     bool is_found = false;
@@ -834,30 +828,65 @@ bool AddName (OsmObject& xml_info, string t, string k, string v) {
 
 bool UpdateNodeInfo (OsmObject& xml_info) {
 
+#if LOG_UNKNOWN_NODE
+    bool tag_ignored = false;
+#endif
+    bool tag_deleted = false;
+
     xml_info.node.type = OBJ_ID_DEFAULT;
 
-    for ( auto it_lex = g_lex_list_nodes.begin (); it_lex != g_lex_list_nodes.end (); it_lex++ ) {
-        for ( auto it_param = xml_info.params.begin (); it_param != xml_info.params.end (); it_param++ ) {
+    auto it_param = xml_info.params.begin ();
+    while ( it_param != xml_info.params.end () ) {
+        
+        tag_deleted = false;
+        #if LOG_UNKNOWN_NODE
+            tag_ignored = true;
+        #endif
+
+        if ( xml_info.node.type == OBJ_ID_DELETE ) {
+            break;
+        }
+
+        for ( auto it_lex = g_lex_list_nodes.begin (); it_lex != g_lex_list_nodes.end (); it_lex++ ) {
+
             if ( LexCmp (it_param->k, it_lex->k) ) {
                 if ( LexCmp (it_param->v, it_lex->v) ) {
 
-                    if ( it_lex->t & OBJ_ID_IGNORE ) {
-                        it_lex = g_lex_list_nodes.erase (it_lex);
-                    } else
-                    if ( it_lex->t & OBJ_ID_DELETE ) {
-                        xml_info.node.type = OBJ_ID_DELETE;
-                        return true;
-                    } else 
-                    if ( it_lex->t & OBJ_ID_NAME ) {
+                    #if LOG_UNKNOWN_NODE
+                        tag_ignored = false;
+                    #endif
 
+                    if ( it_lex->cmd == CMD_ID_IGNORE ) {
+                        it_param = xml_info.params.erase (it_param);
+                        tag_deleted = true;
+                        break;
                     } else
-                    if ( it_lex->t & OBJ_ID_PARAM ) {
+                    if ( it_lex->t & CMD_ID_DELETE ) {
+                        xml_info.node.type = OBJ_ID_DELETE;
+                        break;
+                    } else 
+                    if ( it_lex->t & CMD_ID_NAME ) {
+                        AddName (xml_info, "n", it_lex->p, it_param->k, it_param->v);
+                    } else
+                    if ( it_lex->t & CMD_ID_POSITION ) {
                         xml_info.node.type |= it_lex->t;
                     }
-                    break;
                 }
             }
+
         }
+
+        #if LOG_UNKNOWN_NODE
+            if ( tag_ignored ) {
+                cout << "Tag: k=" << it_param->k << " v=" << it_param->v;
+                cout << endl;
+            }
+        #endif
+
+        if ( !tag_deleted ) {
+            it_param++;
+        }
+
     }
 
     return true;
@@ -902,7 +931,7 @@ bool UpdateWayInfo (OsmObject& xml_info) {
                 if ( LexCmp (it_param->v, it_lex->v) ) {
 
                     if ( it_lex->t == CMD_ID_NAME ) {
-                        AddName (xml_info, "w", it_param->k, it_param->v);
+                        AddName (xml_info, "w", it_lex->p, it_param->k, it_param->v);
                     }
 
                     xml_info.way.type |= it_lex->t;
@@ -1122,7 +1151,7 @@ int main (int argc, char* argv[]) {
         return -1;
     }
 
-    if ( !LoadConfigFile(argv [1]) ) {
+    if ( ! LoadConfigFile(argv [1]) ) {
         cout << "Cannot load config file name: " << argv [1] << endl;
         return -2;
     }
