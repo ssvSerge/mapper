@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cmd.cpp" />
+    <ClCompile Include="src\cmd_factory.cpp" />
+    <ClCompile Include="src\commands.cpp" />
+    <ClCompile Include="src\command_add_locations_to_ways.cpp" />
+    <ClCompile Include="src\command_apply_changes.cpp" />
+    <ClCompile Include="src\command_cat.cpp" />
+    <ClCompile Include="src\command_changeset_filter.cpp" />
+    <ClCompile Include="src\command_check_refs.cpp" />
+    <ClCompile Include="src\command_derive_changes.cpp" />
+    <ClCompile Include="src\command_diff.cpp" />
+    <ClCompile Include="src\command_export.cpp" />
+    <ClCompile Include="src\command_extract.cpp" />
+    <ClCompile Include="src\command_fileinfo.cpp" />
+    <ClCompile Include="src\command_getid.cpp" />
+    <ClCompile Include="src\command_help.cpp" />
+    <ClCompile Include="src\command_merge.cpp" />
+    <ClCompile Include="src\command_merge_changes.cpp" />
+    <ClCompile Include="src\command_renumber.cpp" />
+    <ClCompile Include="src\command_show.cpp" />
+    <ClCompile Include="src\command_sort.cpp" />
+    <ClCompile Include="src\command_tags_filter.cpp" />
+    <ClCompile Include="src\command_time_filter.cpp" />
+    <ClCompile Include="src\export\export_format_json.cpp" />
+    <ClCompile Include="src\export\export_format_text.cpp" />
+    <ClCompile Include="src\export\export_handler.cpp" />
+    <ClCompile Include="src\extract\extract.cpp" />
+    <ClCompile Include="src\extract\extract_bbox.cpp" />
+    <ClCompile Include="src\extract\extract_polygon.cpp" />
+    <ClCompile Include="src\extract\geojson_file_parser.cpp" />
+    <ClCompile Include="src\extract\osm_file_parser.cpp" />
+    <ClCompile Include="src\extract\poly_file_parser.cpp" />
+    <ClCompile Include="src\extract\strategy_complete_ways.cpp" />
+    <ClCompile Include="src\extract\strategy_complete_ways_with_history.cpp" />
+    <ClCompile Include="src\extract\strategy_simple.cpp" />
+    <ClCompile Include="src\extract\strategy_smart.cpp" />
+    <ClCompile Include="src\io.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\util.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\cmd.hpp" />
+    <ClInclude Include="src\command_add_locations_to_ways.hpp" />
+    <ClInclude Include="src\command_apply_changes.hpp" />
+    <ClInclude Include="src\command_cat.hpp" />
+    <ClInclude Include="src\command_changeset_filter.hpp" />
+    <ClInclude Include="src\command_check_refs.hpp" />
+    <ClInclude Include="src\command_derive_changes.hpp" />
+    <ClInclude Include="src\command_diff.hpp" />
+    <ClInclude Include="src\command_export.hpp" />
+    <ClInclude Include="src\command_extract.hpp" />
+    <ClInclude Include="src\command_fileinfo.hpp" />
+    <ClInclude Include="src\command_getid.hpp" />
+    <ClInclude Include="src\command_help.hpp" />
+    <ClInclude Include="src\command_merge.hpp" />
+    <ClInclude Include="src\command_merge_changes.hpp" />
+    <ClInclude Include="src\command_renumber.hpp" />
+    <ClInclude Include="src\command_show.hpp" />
+    <ClInclude Include="src\command_sort.hpp" />
+    <ClInclude Include="src\command_tags_filter.hpp" />
+    <ClInclude Include="src\command_time_filter.hpp" />
+    <ClInclude Include="src\exception.hpp" />
+    <ClInclude Include="src\export\export_format.hpp" />
+    <ClInclude Include="src\export\export_format_json.hpp" />
+    <ClInclude Include="src\export\export_format_text.hpp" />
+    <ClInclude Include="src\export\export_handler.hpp" />
+    <ClInclude Include="src\export\options.hpp" />
+    <ClInclude Include="src\extract\extract.hpp" />
+    <ClInclude Include="src\extract\extract_bbox.hpp" />
+    <ClInclude Include="src\extract\extract_polygon.hpp" />
+    <ClInclude Include="src\extract\geojson_file_parser.hpp" />
+    <ClInclude Include="src\extract\osm_file_parser.hpp" />
+    <ClInclude Include="src\extract\poly_file_parser.hpp" />
+    <ClInclude Include="src\extract\strategy.hpp" />
+    <ClInclude Include="src\extract\strategy_complete_ways.hpp" />
+    <ClInclude Include="src\extract\strategy_complete_ways_with_history.hpp" />
+    <ClInclude Include="src\extract\strategy_simple.hpp" />
+    <ClInclude Include="src\extract\strategy_smart.hpp" />
+    <ClInclude Include="src\util.hpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{98F6D68D-916E-43B0-B412-61B4E02C2C8F}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>osmiumtool</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>OsmiumTool</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)_bin\$(Configuration)\</OutDir>
+    <IntDir>$(OutDir)..\_obj\$(ProjectName)_$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)_libs\boost_1_67_0;$(SolutionDir)_libs\libexpat_2_2_5\source\lib;$(SolutionDir)_libs\bzip2_1_0_6\src;$(SolutionDir)_libs\zlib_1_2_11\src;$(SolutionDir)_libs\libosmium_1_12_1\lib\include;$(SolutionDir)_libs\rapidjson_1_1\include;$(SolutionDir)_libs\protozero_1_6_2\include;$(SolutionDir)_libs\GeographicLib_1_49\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)_libs\boost_1_67_0\stage\lib\;$(OutDir);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)_bin\$(Configuration)\</OutDir>
+    <IntDir>$(OutDir)..\_obj\$(ProjectName)_$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)_libs\boost_1_67_0;$(SolutionDir)_libs\libexpat_2_2_5\source\lib;$(SolutionDir)_libs\bzip2_1_0_6\src;$(SolutionDir)_libs\zlib_1_2_11\src;$(SolutionDir)_libs\libosmium_1_12_1\lib\include;$(SolutionDir)_libs\rapidjson_1_1\include;$(SolutionDir)_libs\protozero_1_6_2\include;$(SolutionDir)_libs\GeographicLib_1_49\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)_libs\boost_1_67_0\stage\lib\;$(OutDir);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4996; 4503; 4267</DisableSpecificWarnings>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>bzip2_1_0_6.lib;expat_2_2_5.lib;zlib_1_2_11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;XML_STATIC;XML_LARGE_SIZE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4996; 4503; 4267</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>bzip2_1_0_6.lib;expat_2_2_5.lib;zlib_1_2_11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

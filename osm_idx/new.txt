@@ -1,0 +1,306 @@
+#include <iostream>
+#include <string>
+#include <list>
+#include <set>
+#include <map>
+#include <queue>
+#include <deque>
+#include <sstream>
+#include <iomanip>
+#include <functional> 
+
+
+#include "..\_tools\XmlInspector.hpp"
+
+
+using namespace std;
+
+
+#define CFG_TEXT_DEFAULT                        "Default"
+#define CFG_TEXT_IGNORE                         "Ignore"
+#define CFG_TEXT_DELETE                         "Delete"
+#define CFG_TEXT_NAME                           "Name"
+#define CFG_TEXT_TRANSPORT                      "Transport"
+#define CFG_TEXT_BUILDING                       "Building"
+#define CFG_TEXT_ROAD                           "Road"
+#define CFG_TEXT_AREA                           "Area"
+#define CFG_TEXT_WAY                            "Way"
+#define CFG_TEXT_CIRCLE                         "Circle"
+#define CFG_TEXT_OPTION                         "Option"
+#define CFG_TEXT_RAILWAY                        "Railway"
+#define CFG_TEXT_WATERWAY                       "Waterway"
+#define CFG_TEXT_WAY_NODE                       "Node"
+
+#define CFG_PARAM_JUNCTION                      "Junction"
+#define CFG_PARAM_BUS_STOP                      "BusStop"
+#define CFG_PARAM_TRAM_STOP                     "TramStop"
+#define CFG_PARAM_METRO_STOP                    "MetroStop"
+#define CFG_PARAM_METRO_ENTRANCE                "MetroEntrance"
+#define CFG_PARAM_TRIAN_STOP                    "TrainStop"
+
+#define CFG_PARAM_NODE_CIRCLE                   "TurnCircle"
+#define CFG_PARAM_WAY_PRIMARY                   "Primary" 
+#define CFG_PARAM_WAY_SECONDARY                 "Secondary"
+#define CFG_PARAM_WAY_RESIDENTIAL               "Residential"
+#define CFG_PARAM_WAY_SERVICE                   "Service"
+#define CFG_PARAM_WAY_TERTIARY                  "Tertiary" 
+#define CFG_PARAM_WAY_TRUNK                     "Trunk" 
+#define CFG_PARAM_WAY_MOTORWAY                  "Motorway"
+#define CFG_PARAM_WAY_TRACK                     "Track" 
+#define CFG_PARAM_WAY_STREET                    "Street" 
+#define CFG_PARAM_RAILWAY_TRAIN                 "Train"
+#define CFG_PARAM_RAILWAY_TRAM                  "Tram"
+#define CFG_PARAM_RAILWAY_METRO                 "Metro"
+#define CFG_PARAM_AREA_GRASS                    "Grass"
+#define CFG_PARAM_AREA_FOREST                   "Forest"
+#define CFG_PARAM_AREA_ASPHALT                  "Asphalt"
+#define CFG_PARAM_AREA_ROCK                     "Rock"
+
+
+#define CFG_PARAM_BUILDING_OUT                  "Out"
+#define CFG_PARAM_BUILDING_IN                   "In"
+
+
+#define CACHE_FILE_TEXT_NODE                    "Node:"
+#define CACHE_FILE_OBJ_OPTION                   "\t"
+#define CACHE_FILE_OBJ_OPTION_PRI_TYPE          "P:"
+#define CACHE_FILE_OBJ_OPTION_SEC_TYPE          "S:"
+#define CACHE_FILE_OBJ_OPTION_NAME              "N:"
+#define CACHE_FILE_OBJ_OPTION_LANG_DELIM        ":"
+#define CACHE_FILE_OBJ_DELIM                    " "
+
+
+#define GEO_COORDINATE_ERROR        (-1000)
+#define GEO_ID_ERROR                   (-1)
+
+
+#define ARRAY_SIZE(x)           ( sizeof(x) / sizeof(x[0]) )
+#define SET_FALSE(var)          { var=false; cout << "Error ar: " << __LINE__ << endl; }
+#define RET_FALSE               { cout << "Error at: " << __LINE__ << endl; return false; }
+
+
+typedef enum tag_xml_prime_type_id {
+        ID_TYPE_DEFAULT = 0,
+        ID_NODE_IGNORE,
+        ID_NODE_DELETE,
+        ID_NODE_PUBLIC_TRANSPORT,
+        ID_NODE_BUILDING,
+        ID_NODE_NAME,
+        ID_WAY_NODE,
+        ID_WAY_ROAD,
+        ID_WAY_RAILWAY,
+        ID_WAY_WATERWAY,
+        ID_BUILDING,
+        ID_PATH_AREA,
+        ID_PATH_WAY,
+        ID_PATH_CIRCLE,
+        ID_OPTION,
+        ID_NODE_LAST_ID
+}       XML_PRIME_TYPE;
+
+
+typedef set<XML_PRIME_TYPE>         PRIME_TYPES_LIST;
+
+
+typedef struct tag_xml_lex_info {
+        XML_PRIME_TYPE  t;
+        string          k;
+        string          v;
+        string          params [16];
+}       XML_LEX_INFO;
+
+
+typedef struct tag_prime_lex {
+        string              s;
+        XML_PRIME_TYPE      t;
+}       PRIME_LEX;
+
+
+typedef vector<XML_LEX_INFO>  LEX_LIST;
+
+
+static const PRIME_LEX prime_lex_list[] = {
+    { CFG_TEXT_DEFAULT,     ID_TYPE_DEFAULT },
+    { CFG_TEXT_IGNORE,      ID_NODE_IGNORE },
+    { CFG_TEXT_DELETE,      ID_NODE_DELETE },
+    { CFG_TEXT_NAME,        ID_NODE_NAME },
+    { CFG_TEXT_TRANSPORT,   ID_NODE_PUBLIC_TRANSPORT },
+    { CFG_TEXT_ROAD,        ID_WAY_ROAD },
+    { CFG_TEXT_RAILWAY,     ID_WAY_RAILWAY },
+    { CFG_TEXT_BUILDING,    ID_BUILDING },
+    { CFG_TEXT_AREA,        ID_PATH_AREA },
+    { CFG_TEXT_WAY,         ID_PATH_WAY },
+    { CFG_TEXT_CIRCLE,      ID_PATH_CIRCLE },
+    { CFG_TEXT_WATERWAY,    ID_WAY_WATERWAY },
+    { CFG_TEXT_OPTION,      ID_OPTION }
+};
+
+
+LEX_LIST    g_lex_list_nodes;
+LEX_LIST    g_lex_list_ways;
+LEX_LIST    g_lex_list_rels;
+
+
+bool MapPrimeCodeNode (string s, XML_PRIME_TYPE& t) {
+
+    t = ID_NODE_LAST_ID;
+
+    for ( size_t i = 0; i < ARRAY_SIZE (prime_lex_list); i++ ) {
+        if ( prime_lex_list [i].s == s ) {
+            t = prime_lex_list [i].t;
+            break;
+        }
+    }
+
+    if ( t == ID_NODE_LAST_ID ) {
+        cout << "Unknown prine code: " << s << endl;
+        RET_FALSE;
+    }
+
+    return true;
+}
+
+
+string& trim (string &s, string delims = " ") {
+
+    size_t l, r, c;
+    std::size_t found;
+
+    for ( l = 0; l < s.length (); l++ ) {
+        found = delims.find (s [l]);
+        if ( found == string::npos ) {
+            break;
+        }
+    }
+
+    if ( l == s.length () ) {
+        s = "";
+        return s;
+    }
+
+    for ( r = s.length () - 1; r > l; r-- ) {
+        found = delims.find (s [r]);
+        if ( found == string::npos ) {
+            break;
+        }
+    }
+
+    c = (r - l + 1);
+    s = s.substr (l, c);
+
+    return s;
+}
+
+
+bool ProcessCfgLine (string str) {
+
+    if ( str.length () <= 1 ) {
+        return true;
+    }
+
+    if ( str [0] == '#' ) {
+        return true;
+    }
+
+    stringstream    ss (str);
+    string          s_type;
+    string          s_op;
+    XML_LEX_INFO    xml_info;
+    bool            is_failed = false;
+
+    ss >> s_type;
+    if ( s_type.empty () ) {
+        RET_FALSE;
+    }
+
+    ss >> xml_info.k;
+    ss >> xml_info.v;
+
+    if ( xml_info.k.empty () || xml_info.v.empty () ) {
+        RET_FALSE;
+    }
+
+    ss >> s_op;
+    if ( s_op.empty () ) {
+        RET_FALSE;
+    }
+    if ( !MapPrimeCodeNode (s_op, xml_info.t) ) {
+        RET_FALSE;
+    }
+
+    for ( int i = 0; i < ARRAY_SIZE (xml_info.params); i++ ) {
+        ss >> xml_info.params [i];
+        if ( xml_info.params [i].empty () ) {
+            break;
+        }
+    }
+
+    if ( s_type == "n" ) {
+        g_lex_list_nodes.push_back (xml_info);
+    } else
+    if ( s_type == "w" ) {
+        g_lex_list_ways.push_back (xml_info);
+    } else
+    if ( s_type == "r" ) {
+        g_lex_list_rels.push_back (xml_info);
+    } else {
+        RET_FALSE;
+    }
+
+    return true;
+}
+
+
+bool LoadConfigFile (string cfg_file_name) {
+
+    string str;
+    ifstream file (cfg_file_name);
+
+    if ( !file ) {
+        RET_FALSE;
+    }
+
+    int line_id = 0;
+
+    while ( getline (file, str) ) {
+
+        line_id++;
+
+        trim (str, " \t");
+
+        if ( !ProcessCfgLine (str) ) {
+            cout << "Bad CFG file at line: " << line_id << " (" << str << ") " << endl;
+            RET_FALSE;
+        }
+    }
+
+    return true;
+}
+
+
+int main (int argc, char* argv[]) {
+
+    string tag_name;
+    int offset = 0;
+    int stop   = 0;
+    ofstream out_file;
+
+    if ( argc != 4 ) {
+        cout << "Filtering [config_file_name] [in_file_name] [cache_file_name]" << endl;
+        return -1;
+    }
+
+    if ( !LoadConfigFile(argv [1]) ) {
+        cout << "Cannot load config file name: " << argv [1] << endl;
+        return -2;
+    }
+
+    out_file.open(argv [3]);
+    if ( !out_file ) {
+        cout << "Cannot create/open cache file: " << argv [3] << endl;
+        return -3;
+    }
+
+
+    return 0;
+}

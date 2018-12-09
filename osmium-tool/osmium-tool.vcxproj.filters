@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{03536d0c-fafe-4cc6-ab95-2693dc1a1fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\export">
+      <UniqueIdentifier>{94390322-d282-4666-b7d0-ea69d4e3276b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\extract">
+      <UniqueIdentifier>{0fea2e95-0cd9-401f-9676-689d5ee5ad24}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\export\export_format_json.cpp">
+      <Filter>src\export</Filter>
+    </ClCompile>
+    <ClCompile Include="src\export\export_format_text.cpp">
+      <Filter>src\export</Filter>
+    </ClCompile>
+    <ClCompile Include="src\export\export_handler.cpp">
+      <Filter>src\export</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\extract.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\extract_bbox.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\extract_polygon.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\geojson_file_parser.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\osm_file_parser.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\poly_file_parser.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\strategy_complete_ways.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\strategy_complete_ways_with_history.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\strategy_simple.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extract\strategy_smart.cpp">
+      <Filter>src\extract</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cmd.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cmd_factory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_add_locations_to_ways.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_apply_changes.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_cat.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_derive_changes.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_diff.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_export.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_extract.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_fileinfo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_getid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_help.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_changeset_filter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_check_refs.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_merge.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_merge_changes.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_renumber.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_show.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_sort.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_tags_filter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_time_filter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\commands.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\io.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\export\export_format.hpp">
+      <Filter>src\export</Filter>
+    </ClInclude>
+    <ClInclude Include="src\export\export_format_json.hpp">
+      <Filter>src\export</Filter>
+    </ClInclude>
+    <ClInclude Include="src\export\export_format_text.hpp">
+      <Filter>src\export</Filter>
+    </ClInclude>
+    <ClInclude Include="src\export\export_handler.hpp">
+      <Filter>src\export</Filter>
+    </ClInclude>
+    <ClInclude Include="src\export\options.hpp">
+      <Filter>src\export</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\extract.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\extract_bbox.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\extract_polygon.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\geojson_file_parser.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\osm_file_parser.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\poly_file_parser.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\strategy.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\strategy_complete_ways.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\strategy_complete_ways_with_history.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\strategy_simple.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\extract\strategy_smart.hpp">
+      <Filter>src\extract</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cmd.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_add_locations_to_ways.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_apply_changes.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_cat.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_derive_changes.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_diff.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_export.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_extract.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_fileinfo.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_getid.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_help.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_changeset_filter.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_check_refs.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_merge.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_merge_changes.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_renumber.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_show.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_sort.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_tags_filter.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command_time_filter.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\exception.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
